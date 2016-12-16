@@ -57,5 +57,7 @@ bool CElevator::ChangeImagePosition(IEnums::FLOOR a_eNewPosition)
     PostMessage((HWND)m_hDriver, IEnums::M_CHANGE_IMAGE_POSITION, a_eNewPosition, (LPARAM)m_hOwnHandle);
 
 
+
+
     return fRetVal;
 }

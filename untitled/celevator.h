@@ -3,10 +3,11 @@
 
 #include <windows.h>
 #include <stdio.h>
-#include <QDeclarativeComponent>
-#include <QDeclarativeView>
+#include <QString>
 
 #include "ienums.h"
+
+class QQmlApplicationEngine;
 
 class CElevator
 {

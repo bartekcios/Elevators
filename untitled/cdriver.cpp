@@ -1,9 +1,12 @@
 #include "cdriver.h"
 
+#include "celevator.h"
+#include "cpassenger.h"
+
 DWORD WINAPI ElevatorThread(LPVOID lpParameter)
 {
-    CDriver::SCreateElevator & sCreateElevator = *(CDriver::SCreateElevator*)lpParameter;
-    CElevator * pElevator = new CElevator(sCreateElevator.m_iID, sCreateElevator.m_hDriver, sCreateElevator.m_hSyncHandle, sCreateElevator.m_sImageName);
+    CDriver::SCreateElevatorThread & sCreateElevatorThread = *(CDriver::SCreateElevatorThread*)lpParameter;
+    CElevator * pElevator = new CElevator(sCreateElevatorThread.m_iID, sCreateElevatorThread.m_hDriver, sCreateElevatorThread.m_hSyncHandle, sCreateElevatorThread.m_sImageName);
     if(0 != pElevator)
     {
 
@@ -21,7 +24,7 @@ CDriver::CDriver(int a_iNoElevations):
     {
         HANDLE hSyncHandle = CreateEvent(0, true, false, 0);
         std::string sImageName = "imageElevator" + i;
-        SCreateElevator sCreateElevator = {i, GetActiveWindow(),hSyncHandle, sImageName};
+        SCreateElevatorThread sCreateElevator = {i, GetActiveWindow(),hSyncHandle, sImageName};
 
         m_asElevators[i].m_hHandle = CreateThread(0, 0, ElevatorThread, &sCreateElevator, 0, 0);
         DWORD dWaitRetVal = WaitForSingleObject(hSyncHandle, 10);
@@ -154,7 +157,7 @@ bool CDriver::HandleMessageFromQueue()
             QString qsImageName = GetImageName((HANDLE)sMessage.lParam);
             IEnums::FLOOR eNewPosition = (IEnums::FLOOR)sMessage.wParam;
 
-            ChangeImagePosition(qsImageName, eNewPosition);
+            //ChangeImagePosition(qsImageName, eNewPosition);
             break;
         }
         case IEnums::M_GET_STATUS:
@@ -191,23 +194,4 @@ QString CDriver::GetImageName(HANDLE a_hElevator)
         }
     }
     return qsRetVal;
-}
-
-bool CDriver::ChangeImagePosition(QString a_qsImageName, IEnums::FLOOR a_ePosition)
-{
-    bool fRetVal = false;
-
-    // Using QDeclarativeView
-    QDeclarativeView view;
-    view.setSource(QUrl::fromLocalFile("MainForm.ui.qml"));
-    view.show();
-    QObject *object = (QObject*)view.rootObject();
-    QObject *rect = object->findChild<QObject*>(a_qsImageName);
-    if (rect)
-    {
-        rect->setProperty("y", (int)a_ePosition);
-        fRetVal = true;
-    }
-
-    return fRetVal;
 }

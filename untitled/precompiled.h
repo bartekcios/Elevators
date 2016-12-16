@@ -4,8 +4,9 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <iostream>
+#include <QTimer>
 
-#include "cdriver.h"
+#include "cguihandler.h"
 
 #endif // PRECOMPILED_H
 

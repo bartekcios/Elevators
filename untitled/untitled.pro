@@ -26,3 +26,5 @@ HEADERS += \
     cguihandler.h
 
 DISTFILES +=
+
+QMAKE_CXXFLAGS += -std=c++11

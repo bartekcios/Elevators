@@ -2,7 +2,7 @@
 
 CPassenger::CPassenger(int a_iID):
     m_iID(a_iID),
-    m_eStatus(INVALID)
+    m_eStatus(S_INVALID)
 {
     // do nothig
 }

@@ -2,9 +2,13 @@
 #define CDRIVER_H
 
 #include <string>
+#include <windows.h>
+#include <QString>
+#include "ienums.h"
 
-#include "celevator.h"
-#include "cpassenger.h"
+class CElevator;
+class CPassenger;
+class QQmlApplicationEngine;
 
 class CDriver
 {
@@ -16,7 +20,7 @@ public:
         CPassenger * m_apPassengersOnFloor[];
     };
 
-    struct SCreateElevator
+    struct SCreateElevatorThread
     {
         const int m_iID;
         const HANDLE m_hDriver;

@@ -1,16 +1,17 @@
 #ifndef CPASSENGER_H
 #define CPASSENGER_H
 
+#include "ienums.h"
 
 class CPassenger
 {
 public:
     enum STATUS
     {
-        INVALID,
-        WAITING,
-        IN_ELEVATOR,
-        ON_DESTINATION_FLOOR,
+        S_INVALID,
+        S_WAITING,
+        S_IN_ELEVATOR,
+        S_ON_DESTINATION_FLOOR,
     };
 
     CPassenger(int a_iID);
@@ -18,8 +19,8 @@ public:
 
     const int m_iID;
     STATUS m_eStatus;
-    //FLOOR m_iFloorFrom = INVALID;
-    //FLOOR m_iFloorTo = INVALID;
+    IEnums::FLOOR m_iFloorFrom;
+    IEnums::FLOOR m_iFloorTo;
 };
 
 #endif // CPASSENGER_H
